@@ -143,7 +143,9 @@ h2.section-title {
 }
 .fv__eyebrow { font-family: var(--font-hand); font-weight: 700; font-size: clamp(24px, 7vw, 34px); color: var(--c-red); line-height: 1; margin: 0 0 4px; }
 .fv h1 {
-  font-family: var(--font-display); font-weight: 400;
+  /* 見出しと同じ 900。Archivo Black に日本語が無く和文は Noto Sans JP に落ちるので、
+     ここで太さが違うと和文だけ細く見えて揃わない */
+  font-family: var(--font-display); font-weight: 900;
   font-size: clamp(34px, 11vw, 54px); line-height: 1.06; letter-spacing: -.035em; margin: 0 0 16px;
 }
 .fv__lead { font-size: clamp(15px, 4vw, 17px); line-height: 1.85; margin: 0; }
@@ -303,7 +305,7 @@ h2.section-title {
       <a class="back reveal" href="support.html">← 活動支援のご案内</a>
       <p class="fv__eyebrow reveal tilt-l">Partner with us.</p>
       <h1 class="reveal" data-stagger="1">年間<br>スポンサー</h1>
-      <p class="fv__lead reveal" data-stagger="2">1年間を通して活動を支えてくださる、<strong>個人・法人を問わない</strong>パートナーです。お名前とロゴは活動当日の横断幕・Tシャツと、公式サイトに掲載します。<strong>これは広告枠の販売ではなく、一緒に島の未来をつくる「支援の証」です。</strong></p>
+      <p class="fv__lead reveal" data-stagger="2">1年間を通して活動を支えてくださる、<strong>個人・法人を問わない</strong>パートナーです。お名前とロゴは活動当日の横断幕・Tシャツと、公式サイトに掲載します。<strong>一緒に島の未来をつくってくださる、パートナーとしての「支援の証」です。</strong></p>
 
       <div class="artifact reveal" data-stagger="3">
         <span class="artifact__tag">TAPESTRY · 2600 × 600mm</span>

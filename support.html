@@ -100,7 +100,9 @@ h2.section-title { font-family: var(--font-display); font-weight: 900; font-size
 .fv { background: var(--c-yellow); padding-top: clamp(30px, 8vw, 46px); padding-bottom: clamp(80px, 11vw, 120px); }
 .fv .back { display: inline-flex; align-items: center; gap: 6px; font-family: var(--font-meta); font-size: 12px; font-weight: 700; letter-spacing: .1em; margin-bottom: 20px; }
 .fv__eyebrow { font-family: var(--font-hand); font-weight: 700; font-size: clamp(24px, 7vw, 34px); color: var(--c-red); line-height: 1; margin: 0 0 4px; }
-.fv h1 { font-family: var(--font-display); font-weight: 400; font-size: clamp(34px, 11vw, 54px); line-height: 1.06; letter-spacing: -.035em; margin: 0 0 16px; }
+/* 見出し（h2.section-title）と同じ 900 にする。Archivo Black に日本語が無いので
+   和文は Noto Sans JP に落ちる。ここで太さが違うと、和文だけ細く見えて揃わない */
+.fv h1 { font-family: var(--font-display); font-weight: 900; font-size: clamp(34px, 11vw, 54px); line-height: 1.06; letter-spacing: -.035em; margin: 0 0 16px; }
 .fv__lead { font-size: clamp(15px, 4vw, 17px); line-height: 1.85; margin: 0; }
 .credo {
   margin-top: 24px; padding: 18px 20px; background: var(--c-ink); color: #fff;
