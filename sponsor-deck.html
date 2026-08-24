@@ -164,6 +164,9 @@ body {
 .points li.is-key { background: var(--c-yellow); }
 /* 3つ横並び。インラインで書くと、狭い画面での上書きが効かなくなる */
 .points--3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.4cqw; }
+/* 3つ並びは1枚あたりの中身が少ないので、余白を厚めにして器に釣り合わせる */
+.points--3 li { padding: 1.7cqw 1.7cqw; border-width: var(--b-thick); border-radius: 1.2cqw; box-shadow: var(--shadow-card-sm); }
+.points--3 li b { font-size: 1.3cqw; margin-bottom: .6cqw; }
 
 /* インラインで書いていた寸法をクラスに移した。インラインだと狭い画面で上書きできない */
 .rank__name--long { font-size: 1.3cqw; line-height: 1.2; }
@@ -295,7 +298,8 @@ table.t .ng { color: var(--c-red); font-weight: 700; }
   /* グリッドの子は既定で中身より小さくならない。表を内側で横スクロールさせるため 0 にする */
   .split > *, .cols > *, .flow > *, .points--3 > * { min-width: 0; }
   .points { gap: 10px; }
-  .points li { font-size: 14px; padding: 14px 16px; border-radius: 12px; border-width: 1px; }
+  .points li, .points--3 li { font-size: 14px; padding: 16px 18px; border-radius: 12px; border-width: 2px; box-shadow: 4px 4px 0 0 var(--c-border); }
+  .points--3 li b { font-size: 15px; margin-bottom: 4px; }
   .points li b { font-size: 15px; }
 
   /* 現物写真 */
@@ -401,12 +405,12 @@ table.t .ng { color: var(--c-red); font-weight: 700; }
 <section class="slide">
   <p class="eyebrow"><b>01</b> OUR STANCE</p>
   <h2 class="h">宮古島の海を守る<br><span class="mark">パートナー</span>として。</h2>
-  <p class="lead">YUINCHU Beach Clean Project は、宮古島の海を守る活動を無理なく続けていくための仕組みです。スポンサー掲載は、<strong>この活動を一緒に支えてくださっているパートナーであることの表示</strong>として設計しています。長く続けることを前提に、掲出物も制度も組み立てました。</p>
+  <p class="lead">宮古島の海をきれいにする活動を、月1回のペースで続けています。続けるために必要なのは、一度の大きなご支援よりも、<strong>毎年ここにある土台</strong>です。年間スポンサーは、その1年分を一緒に支えてくださるパートナーです。</p>
   <div class="body">
     <ul class="points points--3">
-      <li class="is-key"><b>長く続けるため</b>月1回のビーチクリーンを、何年も続けられる状態にすることを最優先にしています。</li>
-      <li><b>支援の証として</b>掲載は、この活動を支えてくださった事実の記録です。</li>
-      <li><b>約束できることだけ</b>運営体制で確実に実行できる特典に限定しています。無理な約束はしません。</li>
+      <li class="is-key"><b>なぜ年額なのか</b>活動は月1回、掲出物の更新は年1回です。1年分をまとめて支えていただくことで、<strong>その年の予算が先に立ちます。</strong></li>
+      <li><b>どこに出るのか</b>活動当日の横断幕とTシャツ、そして公式サイト。<strong>ゴミを拾っている現場に、そのまま掲げます。</strong></li>
+      <li><b>特典を増やさない理由</b>SNS投稿の代行や個別イベントはお約束しません。<strong>確実に実行できることだけに絞るほうが、活動は長く続きます。</strong></li>
     </ul>
     <p class="note">参加そのものは<strong>どなたでも無料</strong>です。そのうえで、活動を支える方法として寄付・単発支援・年間スポンサーの3つをご用意しています。本資料は、そのうち<strong>年間スポンサー</strong>についてのご案内です。</p>
   </div>
