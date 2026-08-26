@@ -826,6 +826,17 @@ section { background: var(--c-bg); }
 }
 .activity-photo:hover img { transform: scale(1.05); }
 
+/* hidden を付けた要素は必ず消す。
+   .btn などが display を持っているので、ブラウザ既定の hidden だけでは残ってしまう */
+[hidden] { display: none !important; }
+
+/* 迷惑送信よけの隠し入力欄。人には見えず、機械だけが埋める */
+.form__trap {
+  position: absolute; left: -9999px;
+  width: 1px; height: 1px;
+  opacity: 0; pointer-events: none;
+}
+
 /* フォームの状態表示（送信先が入るまでの案内にも使う） */
 .form__status {
   margin: 14px 0 0; padding: 12px 14px;
@@ -1709,20 +1720,24 @@ section { background: var(--c-bg); }
       <form class="form-fields reveal" data-stagger="1" id="bcForm" novalidate>
         <div class="field">
           <label for="f-name">お名前</label>
-          <input id="f-name" type="text" required>
+          <input id="f-name" name="name" type="text" autocomplete="name" required>
         </div>
         <div class="field">
           <label for="f-email">メールアドレス</label>
-          <input id="f-email" type="email" required>
+          <input id="f-email" name="email" type="email" autocomplete="email" required>
         </div>
         <div class="field">
           <label for="f-subject">件名</label>
-          <input id="f-subject" type="text">
+          <input id="f-subject" name="subject" type="text">
         </div>
         <div class="field">
           <label for="f-body">お問い合わせ内容</label>
-          <textarea id="f-body" required></textarea>
+          <textarea id="f-body" name="message" required></textarea>
         </div>
+        <!-- どのページから届いたかを記録する欄。人には見えない -->
+        <input type="hidden" name="source" value="ビーチクリーン">
+        <!-- 迷惑送信よけ。人には見えない欄で、ここに入力があると機械と判断して捨てる -->
+        <input class="form__trap" type="text" name="website" tabindex="-1" autocomplete="off" aria-hidden="true">
         <button type="submit" class="btn form__submit">送信する</button>
         <p class="form__status" id="bcFormStatus" role="status" aria-live="polite" hidden></p>
       </form>
@@ -1777,14 +1792,47 @@ section { background: var(--c-bg); }
 
   // 問い合わせフォーム。送信先（GAS）は結人側のGoogleアカウント作成後に入れる。
   // それまでは外部へ何も送らず、index.html と同じ文言を出す。
+  // ── 問い合わせフォーム ──────────────────────────────────
+  // 送信先は GAS（Google Apps Script）のウェブアプリURL。書き換えるのはここだけ。
+  // ⚠️ FORM_ENDPOINT は beach-clean.html と index.html の2ページにある。
+  //    URLをもらったら両方に貼る。片方だけだと、そのページのフォームが黙って準備中のままになる。
+  // 設置手順は docs/260824_フォーム設置手順.md。
+  // 空のあいだは「準備中」と出るだけで、外部へは何も送らない。
+  var FORM_ENDPOINT = 'https://script.google.com/macros/s/AKfycbxFKGOOMtYHCPVky88VasHFgksMs4KGtFgyfDVQcy8qtW2qyQl0ZXv4TtIHbyn8DGXL/exec';
+
   var bcForm = document.getElementById('bcForm');
   var bcStatus = document.getElementById('bcFormStatus');
   if (bcForm && bcStatus) {
+    var bcButton = bcForm.querySelector('.form__submit');
     bcForm.addEventListener('submit', function (e) {
       e.preventDefault();
       if (!bcForm.checkValidity()) { bcForm.reportValidity(); return; }
-      bcStatus.textContent = 'ただいまフォームを準備中です。お手数ですが、参加のお申し込みは LINE からお願いいたします。';
-      bcStatus.hidden = false;
+
+      if (!FORM_ENDPOINT) {
+        bcStatus.textContent = 'ただいまフォームを準備中です。お手数ですが、参加のお申し込みは LINE からお願いいたします。';
+        bcStatus.hidden = false;
+        return;
+      }
+
+      var buttonLabel = bcButton.textContent;
+      bcButton.disabled = true;
+      bcButton.textContent = '送信中…';
+
+      // GAS 側が e.parameter で素直に受け取れる形に変換する
+      var params = new URLSearchParams();
+      new FormData(bcForm).forEach(function (value, key) { params.append(key, value); });
+
+      fetch(FORM_ENDPOINT, { method: 'POST', mode: 'no-cors', body: params }).then(function () {
+        bcForm.querySelectorAll('.field, .form__submit').forEach(function (el) { el.hidden = true; });
+        bcStatus.textContent = 'ありがとうございます。お問い合わせを受け付けました。担当者より順次ご連絡いたします。';
+        bcStatus.hidden = false;
+        bcStatus.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      }).catch(function () {
+        bcButton.disabled = false;
+        bcButton.textContent = buttonLabel;
+        bcStatus.textContent = '送信に失敗しました。時間をおいて、もう一度お試しください。LINE からもご連絡いただけます。';
+        bcStatus.hidden = false;
+      });
     });
   }
 

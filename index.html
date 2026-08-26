@@ -7,7 +7,7 @@
   <meta name="description" content="一般社団法人 結人は、宮古島の美しい海・文化・人のつながりを次世代へつなぐため、環境保全、地域連携、持続可能な経済活動に取り組む法人です。">
   <title>一般社団法人 結人｜宮古島の美しい海・文化・人を次世代へ</title>
   <link rel="icon" href="assets/favicon.png" type="image/png">
-  <link rel="stylesheet" href="style.css?v=260824-1">
+  <link rel="stylesheet" href="style.css?v=260826-1">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;700&family=Noto+Serif+JP:wght@400;500;600;700&family=Cormorant+Garamond:wght@400;500;600&display=swap" rel="stylesheet">
@@ -228,6 +228,8 @@
             <span>お問い合わせ内容</span>
             <textarea name="message" rows="5" required></textarea>
           </label>
+          <!-- どのページから届いたかを記録する欄。人には見えない -->
+          <input type="hidden" name="source" value="法人サイト">
           <!-- 迷惑送信よけ。人には見えない欄で、ここに入力があると機械と判断して捨てる -->
           <input class="contact-form__trap" type="text" name="website" tabindex="-1" autocomplete="off" aria-hidden="true">
           <button class="section-link contact-form__button" type="submit">送信する</button>
@@ -305,10 +307,12 @@
     updateCurrentNav();
 
     // ── 問い合わせフォーム ──────────────────────────────────
-    // 送信先は GAS（Google Apps Script）のウェブアプリURL。書き換えるのはここだけ。
+    // 送信先は GAS（Google Apps Script）のウェブアプリURL。
+    // ⚠️ FORM_ENDPOINT は index.html と beach-clean.html の2ページにある。
+    //    URLをもらったら両方に貼る。片方だけだと、そのページのフォームが黙って準備中のままになる。
     // 設置手順は docs/260824_フォーム設置手順.md。
     // 空のあいだは「準備中」と出るだけで、外部へは何も送らない。
-    const FORM_ENDPOINT = '';
+    const FORM_ENDPOINT = 'https://script.google.com/macros/s/AKfycbxFKGOOMtYHCPVky88VasHFgksMs4KGtFgyfDVQcy8qtW2qyQl0ZXv4TtIHbyn8DGXL/exec';
 
     const contactForm = document.getElementById('contact-form');
     const contactThanks = document.getElementById('contact-thanks');

@@ -19,6 +19,13 @@
   box-sizing: border-box;
 }
 
+/* hidden を付けた要素は必ず消す。
+   display を指定したクラス（.section-link など）が当たっていると、
+   ブラウザ既定の hidden が負けて「隠したはずの送信ボタンが残る」ことがある */
+[hidden] {
+  display: none !important;
+}
+
 html {
   scroll-behavior: smooth;
 }
