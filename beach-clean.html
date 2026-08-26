@@ -977,6 +977,9 @@ section { background: var(--c-bg); }
    Keeps the Beach Clean tone while presenting the page as a phone-width LP on desktop. */
 .mobile-first-layout {
   --phone-w: 700px;
+  /* 1100px 以上で、左のサイドナビを置くために列を右へずらす量。
+     既定を 0 にしておくことで、列の位置を使う計算がどの幅でも同じ式で書ける */
+  --stage-offset: 0px;
   --gutter: clamp(22px, 6vw, 34px);
   --section-y: clamp(64px, 12vw, 92px);
   background:
@@ -1294,21 +1297,42 @@ section { background: var(--c-bg); }
   width: 100%;
 }
 
-.mobile-first-layout .floating-cta {
-  right: auto;
-  left: 50%;
-  bottom: 14px;
-  width: min(calc(100% - 28px), calc(var(--phone-w) - 28px));
-  justify-content: center;
-  transform: translateX(-50%);
+/* LINE のフローティングボタン。スマホと PC で置き方をまるごと分ける。
+   ⚠️ 位置決めに transform を使わない。transform は「隠すときに下へ滑らせる動き」でも
+      使うので、両方に持たせると必ずぶつかる（元は translateX(-50%) で中央寄せしていて、
+      隠すときだけ translate(-50%, 120%) と書き直す必要があった）。
+      左右の余白で置けば、transform は動きだけに専念できる。
+   ⚠️ 打ち消しで上書きせず、760px を境に排他にしてある。片方だけが必ず当たる。
+   ⚠️ :hover と .is-hidden の transform は、メディアクエリの外にある元の指定
+      （.floating-cta:hover / .floating-cta.is-hidden）がそのまま効く。ここでは書かない。
+   2026-08-26 に整理。 */
+
+/* スマホ: 画面の下に貼り付く全幅バー。親指で押しやすい形 */
+@media (max-width: 759px) {
+  .mobile-first-layout .floating-cta {
+    /* 画面が列より広いときは列のふちに合わせ、狭いときは画面から 14px 空ける */
+    left: max(14px, calc(50% - var(--phone-w) / 2 + 14px));
+    right: max(14px, calc(50% - var(--phone-w) / 2 + 14px));
+    bottom: 14px;
+    width: auto;
+    justify-content: center;
+  }
 }
 
-.mobile-first-layout .floating-cta:hover {
-  transform: translate(calc(-50% - 2px), -2px);
-}
-
-.mobile-first-layout .floating-cta.is-hidden {
-  transform: translate(-50%, 120%);
+/* PC: 列の右下に小さなピル。
+   全幅バーのまま PC に出すと、672px の緑の塊が画面で一番強い要素になり、
+   読んでいる間ずっと列の下端をふさぐ。 */
+@media (min-width: 760px) {
+  .mobile-first-layout .floating-cta {
+    /* 列の右のふちから 14px 内側に置く。
+       ⚠️ 列は画面の中央にない。1100px 以上では --stage-offset の分だけ右へずれている
+       （左のサイドナビの場所を空けるため）。ここを引き忘れると、ボタンだけが
+       画面中央を基準にしてしまい、列と噛み合わなくなる。 */
+    left: auto;
+    right: calc(50% - var(--phone-w) / 2 - var(--stage-offset) + 14px);
+    bottom: 18px;
+    width: auto;
+  }
 }
 
 .mobile-first-layout .side-nav {
