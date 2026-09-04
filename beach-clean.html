@@ -868,6 +868,7 @@ section { background: var(--c-bg); }
   font-size: clamp(15px, 1.4vw, 16px);
 }
 .donation__cta { white-space: nowrap; justify-self: start; }
+.supporters__cta { margin-top: 28px; }
 
 /* Supporters — infinite scroll marquee */
 .supporters__rows {
@@ -1275,6 +1276,10 @@ section { background: var(--c-bg); }
   margin-top: 22px;
 }
 
+.mobile-first-layout .supporters__cta .btn {
+  width: 100%;
+}
+
 .mobile-first-layout .supporters__rows {
   -webkit-mask: none;
           mask: none;
@@ -1482,6 +1487,7 @@ section { background: var(--c-bg); }
   <a href="#donation">SUPPORT</a>
   <a href="#supporters">SUPPORTERS</a>
   <a href="#form">CONTACT</a>
+  <a href="index.html">COMPANY</a>
 </nav>
 
 <main id="main">
@@ -1723,6 +1729,10 @@ section { background: var(--c-bg); }
           <div class="supporter-slot"><img src="assets/beach-clean-lp/sponsors/bistro-suiren.jpg" alt="" aria-hidden="true"></div>
         </div>
       </div>
+    </div>
+
+    <div class="supporters__cta reveal" data-stagger="3">
+      <a href="sponsor-deck.html" class="btn btn--primary">年間スポンサー加盟のご案内</a>
     </div>
   </div>
   <svg class="wave-divider wave-divider--ink" viewBox="0 0 1440 80" preserveAspectRatio="none" aria-hidden="true">

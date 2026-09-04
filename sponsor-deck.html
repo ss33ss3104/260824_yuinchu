@@ -360,6 +360,36 @@ table.t .ng { color: var(--c-red); font-weight: 700; }
   pointer-events: none; transition: opacity .4s;
 }
 
+/* ── スライドの最後に置く申込導線 ──
+   スライドの器（.slide）の外に置くので、中の寸法（cqw）には影響しない。
+   PDF書き出し時は下の @media print で消える。 */
+.deck-cta {
+  width: min(100%, 980px);
+  margin-top: 12px;
+  text-align: center;
+  font-family: var(--font-jp);
+  color: #fff;
+}
+.deck-cta__lead {
+  margin: 0 0 16px;
+  font-size: 15px; font-weight: 700; letter-spacing: .04em;
+}
+.deck-cta__actions { display: flex; flex-wrap: wrap; justify-content: center; gap: 12px; }
+.deck-cta__btn {
+  display: inline-flex; align-items: center; justify-content: center;
+  padding: 15px 28px;
+  font-size: 15px; font-weight: 700; text-decoration: none; line-height: 1.4;
+  color: #fff;
+  border: 2px solid rgba(255,255,255,.45);
+  border-radius: 16px;
+  transition: transform .2s ease, border-color .2s ease, background .2s ease;
+}
+.deck-cta__btn:hover { transform: translateY(-2px); border-color: #fff; }
+.deck-cta__btn--primary { color: var(--c-ink); background: var(--c-yellow); border-color: var(--c-yellow); }
+.deck-cta__btn--primary:hover { background: #FFC94A; border-color: #FFC94A; }
+.deck-cta__note { margin: 18px 0 0; font-size: 13px; line-height: 1.8; color: rgba(255,255,255,.6); }
+.deck-cta__note a { color: rgba(255,255,255,.92); font-weight: 700; }
+
 /* ── 印刷（PDF書き出し）: 1枚1ページ・横向き ── */
 /* PDFのページ自体を 16:9（1280×720px = 13.333in × 7.5in）にする。
    A4横だと 1.41:1 なので、スライドの 1.78:1 と合わず上下に帯が出る。 */
@@ -367,7 +397,7 @@ table.t .ng { color: var(--c-red); font-weight: 700; }
 @media print {
   body { background: #fff; }
   .deck { display: block; padding: 0; gap: 0; }
-  .hint { display: none; }
+  .hint, .deck-cta { display: none; }
   .slide {
     width: 100%; height: 100vh; max-width: none;
     border: 0; border-radius: 0;
@@ -683,6 +713,16 @@ table.t .ng { color: var(--c-red); font-weight: 700; }
   <span class="slide__brand">YUINCHU BEACH CLEAN PROJECT</span>
   <span class="slide__no">11 / 11</span>
 </section>
+
+<!-- スライドの外。PDF書き出しには出ない -->
+<div class="deck-cta">
+  <p class="deck-cta__lead">お申し込み・ご相談はこちらから</p>
+  <div class="deck-cta__actions">
+    <a href="sponsor-form.html" class="deck-cta__btn deck-cta__btn--primary">お申し込みフォームへ</a>
+    <a href="beach-clean.html#form" class="deck-cta__btn">お問い合わせ</a>
+  </div>
+  <p class="deck-cta__note">お申し込みの前に<a href="terms.html">スポンサー利用規約</a>をご確認ください。</p>
+</div>
 
 </div>
 
